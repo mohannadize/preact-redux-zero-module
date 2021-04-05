@@ -4,24 +4,23 @@ import { connect } from "./modules/redux-zero.preact.min.js";
 
 const html = htm.bind(h);
 
-
-const actions = store => ({
-  increment: state => ({ count: state.count + 1 }),
-  decrement: state => ({ count: state.count - 1 })
+const actions = (state) => ({
+  increment: ({ count }) => ({ count: ++count }),
+  decrement: ({ count }) => ({ count: --count })
 });
 
 const mapToProps = ({ count }) => ({ count });
 
-
 export default connect(
   mapToProps,
   actions
-)(({ count, increment, decrement }) => (
-  html`<div>
-  <h1>${count}</h1>
-  <div>
-    <button onClick=${decrement}>decrement</button>
-    <button onClick=${increment}>increment</button>
-  </div>
-</div>`
-));
+)(
+  ({ count, increment, decrement }) =>
+    html`<div>
+      <h1>${count}</h1>
+      <div>
+        <button onClick=${decrement}>decrement</button>
+        <button onClick=${increment}>increment</button>
+      </div>
+    </div>`
+);

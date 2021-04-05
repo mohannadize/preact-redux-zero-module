@@ -11,22 +11,31 @@
     <script type="module">
       import { h, render } from "./modules/preact.js";
       import htm from "./modules/htm.js";
+      import createStore, {
+        Provider
+      } from "./modules/redux-zero.preact.min.js";
+      import createCacheStore from "./modules/createCacheStore.js";
 
-      import createStore, { Provider } from "./modules/redux-zero.preact.min.js";
-      
       import TestingComponent from "./Component.js";
 
       const html = htm.bind(h);
 
+      const store = createCacheStore("NewKey", {
+        count: 0
+      });
 
-      const initialState = { count: 1 };
-      const store = createStore(initialState);
+      // const store = createStore({
+      //   count: 0
+      // });
 
-      render(html`
+      render(
+        html`
       <${Provider} store=${store}>
         <${TestingComponent} />
       </${Provider}>
-      `, document.getElementById("root"));
+      `,
+        document.getElementById("root")
+      );
     </script>
   </body>
 </html>
